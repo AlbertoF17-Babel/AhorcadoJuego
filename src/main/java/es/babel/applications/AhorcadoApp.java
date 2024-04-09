@@ -22,15 +22,15 @@ public class AhorcadoApp {
 
     public void run() {
         int opcion;
+        int intentos = 8;
+        String palabra = selectorPalabraService.seleccionarPalabra();
+
         do {
             opcion = inputUsuarioService.obtenerInputMenuPrincipal();
         } while (opcion != 1 && opcion != 2);
 
         if (opcion == 1) {
-            int intentos = 8;
             boolean ganada = true;
-            String palabra = selectorPalabraService.seleccionarPalabra();
-
             while (intentos >= 1 && ganada) {
                 System.out.println("--------------------------------------------");
                 System.out.println("Adivina la palabra...");
@@ -87,6 +87,9 @@ public class AhorcadoApp {
             }
         } else {
             System.out.println("Saliendo del juego...");
+        }
+        if (intentos == 0){
+            System.out.println("TE QUEDASTE SIN INTENTOS!!! La palabra era " + palabra);
         }
     }
 }

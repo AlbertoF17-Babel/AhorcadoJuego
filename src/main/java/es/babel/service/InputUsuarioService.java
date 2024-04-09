@@ -10,9 +10,10 @@ public class InputUsuarioService implements IInputUsuarioService{
     Scanner sc = new Scanner(System.in);
     @Override
     public int obtenerInputMenuPrincipal() {
-        System.out.println("Bienvenido al ahorcado, seleccione una opción");
+        System.out.println("Bienvenido al ahorcado");
         System.out.println("1.- Juego nuevo");
         System.out.println("2.- Salir");
+        System.out.print("Seleccione una opción: ");
         return sc.nextInt();
     }
 
