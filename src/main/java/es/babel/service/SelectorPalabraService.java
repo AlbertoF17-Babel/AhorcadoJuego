@@ -13,9 +13,8 @@ public class SelectorPalabraService implements ISelectorPalabraService{
                 "RÍO", "MONTAÑA", "MESA", "SILLA", "CASA", "JARDÍN", "TELÉFONO", "COMPUTADORA", "BICICLETA", "PAPEL",
                 "PLUMA", "CAMISA", "ZAPATO", "CARPETA", "RELOJ", "VENTANA", "PUERTA", "SOMBRA", "ARCOÍRIS", "NUBE",
                 "MAR", "ÁRBOL", "CIELO", "ESTRELLA"};
-        String[] listadoPalabras2 = {"ÁRBOL"};
         Random rd = new Random();
-        int numPalabraSeleccionada = rd.nextInt(listadoPalabras2.length);
-        return listadoPalabras2[numPalabraSeleccionada];
+        int numPalabraSeleccionada = rd.nextInt(listadoPalabras.length);
+        return listadoPalabras[numPalabraSeleccionada];
     }
 }
