@@ -5,7 +5,9 @@ import es.babel.service.ILetrasUsadasService;
 import es.babel.service.ISelectorPalabraService;
 import org.springframework.stereotype.Component;
 
+import java.text.Normalizer;
 import java.util.Scanner;
+import java.util.regex.Pattern;
 
 @Component
 public class AhorcadoApp {
@@ -24,6 +26,7 @@ public class AhorcadoApp {
         int opcion;
         int intentos = 8;
         String palabra = selectorPalabraService.seleccionarPalabra();
+        String palabraSinAcentos = removerAcentos(palabra);
 
         do {
             opcion = inputUsuarioService.obtenerInputMenuPrincipal();
@@ -36,7 +39,9 @@ public class AhorcadoApp {
                 System.out.println("Adivina la palabra...");
                 for (int i = 0; i < palabra.length(); i++) {
                     Character letra = palabra.charAt(i);
-                    if (letrasUsadasService.devolverLetrasAcertadas().contains(letra)) {
+                    Character letraSinAcento = palabraSinAcentos.charAt(i);
+                    if (letrasUsadasService.devolverLetrasAcertadas().contains(letra) ||
+                            letrasUsadasService.devolverLetrasAcertadas().contains(letraSinAcento)) {
                         System.out.print(letra + " ");
                     } else {
                         System.out.print("_ ");
@@ -55,7 +60,7 @@ public class AhorcadoApp {
                     letra = inputUsuarioService.obtenerInputLetraOPalabra();
                     if (letra.length() == 1){
                         for (int i = 0; i < palabra.length(); i++) {
-                            if (Character.toUpperCase(palabra.charAt(i)) == Character.toUpperCase(letra.charAt(0))) {
+                            if (Character.toUpperCase(palabraSinAcentos.charAt(i)) == Character.toUpperCase(letra.charAt(0))) {
                                 acierto = true;
                                 break;
                             }
@@ -71,7 +76,7 @@ public class AhorcadoApp {
                         }
 
                     } else {
-                        if (letra.equalsIgnoreCase(palabra)){
+                        if (letra.equalsIgnoreCase(palabraSinAcentos)){
                             System.out.println("HAS GANADO!!! La palabra era " + palabra);
                             break;
                         } else {
@@ -91,5 +96,11 @@ public class AhorcadoApp {
         if (intentos == 0){
             System.out.println("TE QUEDASTE SIN INTENTOS!!! La palabra era " + palabra);
         }
+    }
+
+    public String removerAcentos(String str) {
+        String normalized = Normalizer.normalize(str, Normalizer.Form.NFD);
+        Pattern pattern = Pattern.compile("\\p{InCombiningDiacriticalMarks}+");
+        return pattern.matcher(normalized).replaceAll("");
     }
 }
